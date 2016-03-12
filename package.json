@@ -60,6 +60,7 @@
     "bcryptjs": "^2.1.0",
     "bluebird": "^2.3.2",
     "body-parser": "^1.10.0",
+    "cfenv": "^1.0.3",
     "cli-table": "^0.3.0",
     "compression": "^1.2.2",
     "connect": "^3.3.5",

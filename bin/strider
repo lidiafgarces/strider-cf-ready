@@ -1,4 +1,17 @@
 #!/usr/bin/env node
+
+var cfEnv = require('cfenv');
+var appEnv = cfEnv.getAppEnv();
+
+process.env.SERVER_NAME = appEnv.url;
+
+if (process.env.VCAP_SERVICES) {
+  process.env.DB_URI = appEnv.getService('strider-db').credentials.uri;
+  process.env.SMTP_HOST = appEnv.getService('mailgun').credentials.hostname;
+  process.env.SMTP_USER = appEnv.getService('mailgun').credentials.username;
+  process.env.SMTP_PASS = appEnv.getService('mailgun').credentials.password;
+}
+
 var cli = require('strider-cli')({
   version: require('../package.json').version,
   /*
@@ -40,7 +53,7 @@ var cli = require('strider-cli')({
     console.log('Connecting to MongoDB URL: %s\n', mongodbUrl);
     mongoose.connect(mongodbUrl, cb);
   },
-  /* 
+  /*
    * Path to file to touch to restart strider
    */
   restartFile: function() {
